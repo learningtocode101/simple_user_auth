@@ -1,5 +1,6 @@
 RSpec.feature 'User Authentication' do
   context 'Sign Up' do
+    let!(:user) { User.create(email: 'dave@test.com', password: 'password123')}
     scenario 'A user can signup' do
       visit '/'
       click_on 'Sign up'
@@ -9,6 +10,18 @@ RSpec.feature 'User Authentication' do
 
       expect(page).to have_content 'Welcome, test@test.com'
     end
+
+    scenario 'A user can signup' do
+      visit '/'
+      click_on 'Sign up'
+      fill_in :email, with: 'dave@test.com'
+      fill_in :password, with: 'password123'
+      click_button 'Sign up'
+
+      expect(page).to have_content 'Email:'
+      expect(page).to have_content 'Password:'
+    end
+
   end
 
   context 'Sign in/out' do
