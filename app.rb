@@ -11,11 +11,15 @@ class UserAuth < Sinatra::Base
     erb :index
   end
 
+  get '/error' do
+    erb :error
+  end
+
   get '/profile' do
     if signed_in?
       erb :profile
     else
-      redirect 'signin'
+      redirect '/error'
     end
   end
 
@@ -29,7 +33,7 @@ class UserAuth < Sinatra::Base
       session[:user_id] = user.id
       redirect '/profile'
     else
-      redirect '/'
+      redirect '/error'
     end
   end
 
@@ -43,7 +47,7 @@ class UserAuth < Sinatra::Base
       session[:user_id] = user.id
       redirect '/profile'
     else
-      redirect '/'
+      redirect '/error'
     end
   end
 

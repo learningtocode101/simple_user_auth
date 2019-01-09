@@ -11,17 +11,26 @@ RSpec.feature 'User Authentication' do
       expect(page).to have_content 'Welcome, test@test.com'
     end
 
-    scenario 'A user can signup' do
+    scenario 'A user cannot signup with same email' do
       visit '/'
       click_on 'Sign up'
       fill_in :email, with: 'dave@test.com'
       fill_in :password, with: 'password123'
       click_button 'Sign up'
 
-      expect(page).to have_content 'Email:'
-      expect(page).to have_content 'Password:'
+      expect(page).to have_content 'Either your email has aleady been used or your password is less than 6 characters.'
+
     end
 
+    scenario 'A password must be at least 6 characters' do
+      visit '/'
+      click_on 'Sign up'
+      fill_in :email, with: 'dave@test.com'
+      fill_in :password, with: 'passw'
+      click_button 'Sign up'
+
+      expect(page).to have_content 'Either your email has aleady been used or your password is less than 6 characters.'
+    end
   end
 
   context 'Sign in/out' do
